@@ -138,7 +138,6 @@ $(document).on('click', '.pay-invoice', function(event){
     var InvoiceData = $("#"+InvoiceId).data('invoicedata');
     var BankBalance = $(".bank-app-account-balance").data('balance');
 
-    if (BankBalance >= InvoiceData.amount) {
         $.post('https://qb-phone/PayInvoice', JSON.stringify({
             sender: InvoiceData.sender,
             amount: InvoiceData.amount,
@@ -163,9 +162,7 @@ $(document).on('click', '.pay-invoice', function(event){
                 QB.Phone.Notifications.Add("fas fa-university", "QBank", "You don't have enough balance!", "#badc58", 1500);
             }
         });
-    } else {
-        QB.Phone.Notifications.Add("fas fa-university", "QBank", "You don't have enough balance!", "#badc58", 1500);
-    }
+
 });
 
 $(document).on('click', '.decline-invoice', function(event){

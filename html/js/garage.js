@@ -1,3 +1,5 @@
+let veh
+
 $(document).on('click', '.garage-vehicle', function(e){
     e.preventDefault();
 
@@ -10,10 +12,19 @@ $(document).on('click', '.garage-vehicle', function(e){
 
     var Id = $(this).attr('id');
     var VehData = $("#"+Id).data('VehicleData');
-    SetupDetails(VehData);  
+    veh = VehData
+    SetupDetails(VehData);
 });
 
-$(document).on('click', '.garage-cardetails-footer', function(e){
+$(document).on('click', '#track-vehicle', function(e){
+    e.preventDefault()
+    $.post("https://qb-phone/track-vehicle", JSON.stringify({
+        veh: veh,
+    }));
+});
+
+
+$(document).on('click', '#return-button', function(e){
     e.preventDefault();
 
     $(".garage-homescreen").animate({
@@ -28,8 +39,8 @@ SetupGarageVehicles = function(Vehicles) {
     $(".garage-vehicles").html("");
     if (Vehicles != null) {
         $.each(Vehicles, function(i, vehicle){
-            var Element = '<div class="garage-vehicle" id="vehicle-'+i+'"> <span class="garage-vehicle-firstletter">'+vehicle.brand.charAt(0)+'</span> <span class="garage-vehicle-name">'+vehicle.fullname+'</span> </div>';
-            
+            var Element = '<div class="garage-vehicle" id="vehicle-'+i+'"><span class="garage-vehicle-firstletter">'+vehicle.brand.charAt(0)+'</span> <span class="garage-vehicle-name">'+vehicle.fullname+'</span> </div>';
+
             $(".garage-vehicles").append(Element);
             $("#vehicle-"+i).data('VehicleData', vehicle);
         });
